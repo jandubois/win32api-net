@@ -1014,6 +1014,7 @@ fillUserHash(HV *hv, int level, LPBYTE *uiX)
         {
             sv = newSVpv( sStringSid, (I32)(strlen(sStringSid)) );
             hv_store( hv, "userSid", (I32)(strlen("userSid")), sv, 0 );
+            LocalFree(sStringSid);
         }
         HV_STORE_IV(PUSER_INFO_4, usri4_password_expired,    "passwordExpired");
         HV_STORE_PV(PUSER_INFO_4, usri4_home_dir_drive,      "homeDirDrive");
@@ -1118,6 +1119,7 @@ fillUserHash(HV *hv, int level, LPBYTE *uiX)
         {
             sv = newSVpv( sStringSid, (I32)(strlen(sStringSid)) );
             hv_store( hv, "userSid", (I32)(strlen("userSid")), sv, 0 );
+            LocalFree(sStringSid);
         }
     }
 	HV_STORE_IV(PUSER_INFO_23, usri23_flags,             "flags");
@@ -1173,6 +1175,7 @@ fillGroupHash(HV *hv, int level, LPBYTE *uiX)
         {
             sv = newSVpv( sStringSid, (I32)(strlen(sStringSid)) );
             hv_store( hv, "groupSid", (I32)(strlen("groupSid")), sv, 0 );
+            LocalFree(sStringSid);
         }
         HV_STORE_IV(PGROUP_INFO_3, grpi3_attributes, "attributes");
     }
