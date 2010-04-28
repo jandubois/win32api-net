@@ -64,7 +64,7 @@ require DynaLoader;
 }
 $EXPORT_TAGS{ALL}= \@EXPORT_OK;
 
-$VERSION = '0.12';
+$VERSION = '0.13';
 
 sub AUTOLOAD {
     my $constname;
@@ -418,7 +418,7 @@ The C<user> whose information you want.
 
 =item C<level> - Scalar Int
 
-One of: 0, 1, 2, 3, 10, 11 and 20. See L<USER INFO LEVELS>.
+One of: 0, 1, 2, 3, 4, 10, 11, 20, 21, 22 and 23. See L<USER INFO LEVELS>.
 
 =item C<hash> - Hash Reference
 
@@ -563,8 +563,8 @@ The C<server> on which to add the group.
 
 =item C<level> - Scalar String
 
-The C<level> of information contained in C<hash>. This can be one of 0, 1
-or 2. See L<GROUP INFO LEVELS>.
+The C<level> of information contained in C<hash>. This can be one of 0, 1, 2
+or 3. See L<GROUP INFO LEVELS>.
 
 =item C<hash> - Hash Reference
 

@@ -12,6 +12,7 @@
 #define LPTSTR LPWSTR
 #include <lmServer.h>
 #undef LPTSTR
+#include <sddl.h>               /* for ConvertSidToStringSid function */
 
 #include "EXTERN.h"
 #include "perl.h"
@@ -943,11 +944,28 @@ fillUserHash(HV *hv, int level, LPBYTE *uiX)
     
     switch (level) {
     case 3:
-	HV_STORE_IV(PUSER_INFO_3, usri3_password_expired,    "passwordExpired");
-	HV_STORE_PV(PUSER_INFO_3, usri3_home_dir_drive,      "homeDirDrive");
-	HV_STORE_PV(PUSER_INFO_3, usri3_profile,             "profile");
-	HV_STORE_IV(PUSER_INFO_3, usri3_primary_group_id,    "primaryGroupId");
-	HV_STORE_IV(PUSER_INFO_3, usri3_user_id,             "userId");
+    case 4:
+    if( 3 == level )
+    {
+        HV_STORE_IV(PUSER_INFO_3, usri3_password_expired,    "passwordExpired");
+        HV_STORE_PV(PUSER_INFO_3, usri3_home_dir_drive,      "homeDirDrive");
+        HV_STORE_PV(PUSER_INFO_3, usri3_profile,             "profile");
+        HV_STORE_IV(PUSER_INFO_3, usri3_primary_group_id,    "primaryGroupId");
+        HV_STORE_IV(PUSER_INFO_3, usri3_user_id,             "userId");
+    }
+    else
+    {
+        LPTSTR sStringSid = NULL;
+        if( ConvertSidToStringSidA( ((PUSER_INFO_4)uiX)->usri4_user_sid, &sStringSid ) )
+        {
+            sv = newSVpv( sStringSid, (I32)(strlen(sStringSid)) );
+            hv_store( hv, "userSid", (I32)(strlen("userSid")), sv, 0 );
+        }
+        HV_STORE_IV(PUSER_INFO_4, usri4_password_expired,    "passwordExpired");
+        HV_STORE_PV(PUSER_INFO_4, usri4_home_dir_drive,      "homeDirDrive");
+        HV_STORE_PV(PUSER_INFO_4, usri4_profile,             "profile");
+        HV_STORE_IV(PUSER_INFO_4, usri4_primary_group_id,    "primaryGroupId");
+    }
 	/* fall through to 2... */
     case 2:
 	HV_STORE_IV(PUSER_INFO_2, usri2_code_page,           "codePage");
@@ -1011,7 +1029,48 @@ fillUserHash(HV *hv, int level, LPBYTE *uiX)
 	HV_STORE_PV(PUSER_INFO_20, usri20_name,              "name");
 	break;
     case 21:
+	HV_STORE_AV(PUSER_INFO_21, usri21_password,          "password", ENCRYPTED_PWLEN);
+    break;
     case 22:
+	HV_STORE_PV(PUSER_INFO_22, usri22_name,              "name");
+	HV_STORE_AV(PUSER_INFO_22, usri22_password,          "password", ENCRYPTED_PWLEN);
+	HV_STORE_IV(PUSER_INFO_22, usri22_password_age,      "passwordAge");
+	HV_STORE_IV(PUSER_INFO_22, usri22_priv,              "priv");
+	HV_STORE_PV(PUSER_INFO_22, usri22_home_dir,          "homeDir");
+	HV_STORE_PV(PUSER_INFO_22, usri22_comment,           "comment");
+	HV_STORE_IV(PUSER_INFO_22, usri22_flags,             "flags");
+	HV_STORE_PV(PUSER_INFO_22, usri22_script_path,       "scriptPath");
+	HV_STORE_IV(PUSER_INFO_22, usri22_auth_flags,        "authFlags");
+	HV_STORE_PV(PUSER_INFO_22, usri22_full_name,         "fullName");
+	HV_STORE_PV(PUSER_INFO_22, usri22_usr_comment,       "usrComment");
+	HV_STORE_PV(PUSER_INFO_22, usri22_parms,             "parms");
+	HV_STORE_PV(PUSER_INFO_22, usri22_workstations,      "workstations");
+	HV_STORE_IV(PUSER_INFO_22, usri22_last_logon,        "lastLogon");
+	HV_STORE_IV(PUSER_INFO_22, usri22_last_logoff,       "lastLogoff");
+	HV_STORE_IV(PUSER_INFO_22, usri22_acct_expires,      "acctExpires");
+	HV_STORE_IV(PUSER_INFO_22, usri22_max_storage,       "maxStorage");
+	HV_STORE_IV(PUSER_INFO_22, usri22_units_per_week,    "unitsPerWeek");
+	HV_STORE_AV(PUSER_INFO_22, usri22_logon_hours,       "logonHours", 21);
+	HV_STORE_IV(PUSER_INFO_22, usri22_bad_pw_count,      "badPwCount");
+	HV_STORE_IV(PUSER_INFO_22, usri22_num_logons,        "numLogons");
+	HV_STORE_PV(PUSER_INFO_22, usri22_logon_server,      "logonServer");
+	HV_STORE_IV(PUSER_INFO_22, usri22_country_code,      "countryCode");
+	HV_STORE_IV(PUSER_INFO_22, usri22_code_page,         "codePage");
+    break;
+    case 23:
+    {
+        LPTSTR sStringSid = NULL;
+        if( ConvertSidToStringSidA( ((PUSER_INFO_23)uiX)->usri23_user_sid, &sStringSid ) )
+        {
+            sv = newSVpv( sStringSid, (I32)(strlen(sStringSid)) );
+            hv_store( hv, "userSid", (I32)(strlen("userSid")), sv, 0 );
+        }
+    }
+	HV_STORE_IV(PUSER_INFO_23, usri23_flags,             "flags");
+	HV_STORE_PV(PUSER_INFO_23, usri23_comment,           "comment");
+	HV_STORE_PV(PUSER_INFO_23, usri23_full_name,         "fullName");
+	HV_STORE_PV(PUSER_INFO_23, usri23_name,              "name");
+	break;
     case 1003:
     case 1005:
     case 1006:
@@ -1046,9 +1105,24 @@ fillGroupHash(HV *hv, int level, LPBYTE *uiX)
     dTHX;
     
     switch (level) {
+	case 3:
 	case 2:
-	HV_STORE_IV(PGROUP_INFO_2, grpi2_group_id,	 "groupId");
-	HV_STORE_IV(PGROUP_INFO_2, grpi2_attributes, "attributes");
+    if( 2 == level )
+    {
+        HV_STORE_IV(PGROUP_INFO_2, grpi2_group_id,	 "groupId");
+        HV_STORE_IV(PGROUP_INFO_2, grpi2_attributes, "attributes");
+    }
+    else
+    {
+        LPTSTR sStringSid = NULL;
+        if( ConvertSidToStringSidA( ((PGROUP_INFO_3)uiX)->grpi3_group_sid, &sStringSid ) )
+        {
+            sv = newSVpv( sStringSid, (I32)(strlen(sStringSid)) );
+            hv_store( hv, "groupSid", (I32)(strlen("groupSid")), sv, 0 );
+        }
+        HV_STORE_IV(PGROUP_INFO_3, grpi3_attributes, "attributes");
+    }
+	
 	/* fall through to 1 */
     case 1:
 	HV_STORE_PV(PGROUP_INFO_1, grpi1_comment,    "comment");
@@ -1056,6 +1130,8 @@ fillGroupHash(HV *hv, int level, LPBYTE *uiX)
     case 0:
 	HV_STORE_PV(PGROUP_INFO_0, grpi0_name,        "name");
 	break;
+    case 1002:
+    case 1005:
     default:
 	croak("fillGroupHash: Level %d not implemented!\n", level);
     }
