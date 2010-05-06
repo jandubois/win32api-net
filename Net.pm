@@ -1059,13 +1059,7 @@ acctExpires, maxStorage, unitsPerWeek, logonHours, badPwCount, numLogons,
 logonServer, countryCode, codePage, userSid, primaryGroupId, profile,
 homeDirDrive, passwordExpired
 
-=over 16
-
-=item Windows 2000:
-
-This level is not supported
-
-=back
+B<Note:> This level is only supported on Windows Server 2003 and later.
 
 =item Level 10
 
@@ -1096,13 +1090,7 @@ parms
 
 userSid, flags, comment, fullName, name
 
-=over 16
-
-=item Windows 2000:
-
-This level is not supported
-
-=back
+B<Note:> This level is only supported on Windows Server 2003 and later.
 
 =item Level 1003
 
