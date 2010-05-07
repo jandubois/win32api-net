@@ -1,5 +1,9 @@
 Revision history for Perl extension Win32API::Net
 
+0.14	May 06 2010
+	- The 0.13 tarball was rejected by PAUSE because it contained
+	  world writable files/directories.
+
 0.13	May 06 2010
 	- Add support for USER_INFO_4, USER_INFO_21, USER_INFO_22,
 	  USER_INFO_23 and GROUP_INFO_3 for better usability on
