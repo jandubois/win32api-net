@@ -590,9 +590,9 @@ MBTWC(char* name)
 	    croak("Value in logonHours should be an array reference,");	\
 	while (i < n) {							\
 	    if ((svTmp = av_fetch((AV*)svPtrIndirect, i, 0)) != NULL)	\
-		(BYTE)(((CAST)uiX)->field)[i] = (BYTE)SvIV(*svTmp);	\
+		(((CAST)uiX)->field)[i] = (BYTE)SvIV(*svTmp);		\
 	    else							\
-		(BYTE)(((CAST)uiX)->field)[i] = 0;			\
+		(((CAST)uiX)->field)[i] = 0;				\
 	    i++;							\
 	}								\
     } STMT_END

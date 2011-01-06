@@ -1,5 +1,8 @@
 Revision history for Perl extension Win32API::Net
 
+0.15	Jan 06 2011
+	- Remove lvalue casts to restore compatibility with GCC 4.x. [rt#58537]
+
 0.14	May 06 2010
 	- The 0.13 tarball was rejected by PAUSE because it contained
 	  world writable files/directories.
