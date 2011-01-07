@@ -1,5 +1,12 @@
 Revision history for Perl extension Win32API::Net
 
+0.16	 Jan 07 2011
+        - Don't redefine USER_INFO_4 etc because some versions of the
+	  MinGW headers do define the new structures, but don't include
+	  any of the new preprocessor constants, so there is no way to
+	  check for this at compiletime.  Instead we'll always use our
+	  own inlined definitions using a custom name.
+
 0.15	Jan 06 2011
 	- Remove lvalue casts to restore compatibility with GCC 4.x. [rt#58537]
 

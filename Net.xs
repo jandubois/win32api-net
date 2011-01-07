@@ -17,8 +17,7 @@
 WINADVAPI BOOL WINAPI ConvertSidToStringSidA(PSID, LPSTR*);
 #endif
 
-#ifndef UF_ENCRYPTED_TEXT_PASSWORD_ALLOWED
-/* lmaccess.h doesn't include Windows 2003 additions */
+/* old versions of lmaccess.h don't include these Windows 2003 additions */
 typedef struct {
     LPWSTR   usri4_name;
     LPWSTR   usri4_password;
@@ -49,7 +48,7 @@ typedef struct {
     LPWSTR   usri4_profile;
     LPWSTR   usri4_home_dir_drive;
     DWORD    usri4_password_expired;
-} USER_INFO_4, *PUSER_INFO_4;
+} MY_USER_INFO_4, *PMY_USER_INFO_4;
 
 typedef struct {
     LPWSTR   usri23_name;
@@ -57,16 +56,14 @@ typedef struct {
     LPWSTR   usri23_comment;
     DWORD    usri23_flags;
     PSID     usri23_user_sid;
-} USER_INFO_23, *PUSER_INFO_23;
+} MY_USER_INFO_23, *PMY_USER_INFO_23;
 
 typedef struct {
     LPWSTR   grpi3_name;
     LPWSTR   grpi3_comment;
     PSID     grpi3_group_sid;
     DWORD    grpi3_attributes;
-} GROUP_INFO_3, *PGROUP_INFO_3;
-
-#endif
+} MY_GROUP_INFO_3, *PMY_GROUP_INFO_3;
 
 #include "EXTERN.h"
 #include "perl.h"
@@ -1010,16 +1007,16 @@ fillUserHash(HV *hv, int level, LPBYTE *uiX)
     else
     {
         LPTSTR sStringSid = NULL;
-        if( ConvertSidToStringSidA( ((PUSER_INFO_4)uiX)->usri4_user_sid, &sStringSid ) )
+        if( ConvertSidToStringSidA( ((PMY_USER_INFO_4)uiX)->usri4_user_sid, &sStringSid ) )
         {
             sv = newSVpv( sStringSid, (I32)(strlen(sStringSid)) );
             hv_store( hv, "userSid", (I32)(strlen("userSid")), sv, 0 );
             LocalFree(sStringSid);
         }
-        HV_STORE_IV(PUSER_INFO_4, usri4_password_expired,    "passwordExpired");
-        HV_STORE_PV(PUSER_INFO_4, usri4_home_dir_drive,      "homeDirDrive");
-        HV_STORE_PV(PUSER_INFO_4, usri4_profile,             "profile");
-        HV_STORE_IV(PUSER_INFO_4, usri4_primary_group_id,    "primaryGroupId");
+        HV_STORE_IV(PMY_USER_INFO_4, usri4_password_expired, "passwordExpired");
+        HV_STORE_PV(PMY_USER_INFO_4, usri4_home_dir_drive,   "homeDirDrive");
+        HV_STORE_PV(PMY_USER_INFO_4, usri4_profile,          "profile");
+        HV_STORE_IV(PMY_USER_INFO_4, usri4_primary_group_id, "primaryGroupId");
     }
 	/* fall through to 2... */
     case 2:
@@ -1115,17 +1112,17 @@ fillUserHash(HV *hv, int level, LPBYTE *uiX)
     case 23:
     {
         LPTSTR sStringSid = NULL;
-        if( ConvertSidToStringSidA( ((PUSER_INFO_23)uiX)->usri23_user_sid, &sStringSid ) )
+        if( ConvertSidToStringSidA( ((PMY_USER_INFO_23)uiX)->usri23_user_sid, &sStringSid ) )
         {
             sv = newSVpv( sStringSid, (I32)(strlen(sStringSid)) );
             hv_store( hv, "userSid", (I32)(strlen("userSid")), sv, 0 );
             LocalFree(sStringSid);
         }
     }
-	HV_STORE_IV(PUSER_INFO_23, usri23_flags,             "flags");
-	HV_STORE_PV(PUSER_INFO_23, usri23_comment,           "comment");
-	HV_STORE_PV(PUSER_INFO_23, usri23_full_name,         "fullName");
-	HV_STORE_PV(PUSER_INFO_23, usri23_name,              "name");
+	HV_STORE_IV(PMY_USER_INFO_23, usri23_flags,          "flags");
+	HV_STORE_PV(PMY_USER_INFO_23, usri23_comment,        "comment");
+	HV_STORE_PV(PMY_USER_INFO_23, usri23_full_name,      "fullName");
+	HV_STORE_PV(PMY_USER_INFO_23, usri23_name,           "name");
 	break;
     case 1003:
     case 1005:
@@ -1171,13 +1168,13 @@ fillGroupHash(HV *hv, int level, LPBYTE *uiX)
     else
     {
         LPTSTR sStringSid = NULL;
-        if( ConvertSidToStringSidA( ((PGROUP_INFO_3)uiX)->grpi3_group_sid, &sStringSid ) )
+        if( ConvertSidToStringSidA( ((PMY_GROUP_INFO_3)uiX)->grpi3_group_sid, &sStringSid ) )
         {
             sv = newSVpv( sStringSid, (I32)(strlen(sStringSid)) );
             hv_store( hv, "groupSid", (I32)(strlen("groupSid")), sv, 0 );
             LocalFree(sStringSid);
         }
-        HV_STORE_IV(PGROUP_INFO_3, grpi3_attributes, "attributes");
+        HV_STORE_IV(PMY_GROUP_INFO_3, grpi3_attributes, "attributes");
     }
 	
 	/* fall through to 1 */
