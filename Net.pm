@@ -184,7 +184,7 @@ See L<EXAMPLES> and the test.pl script for examples of usage.
 
 =head1 DATA STRUCTURES
 
-Most the the functions in the underlying API allow the programmer to pass
+Most of the functions in the underlying API allow the programmer to pass
 specify at runtime the amount of information that is supplied to the
 function. For example, the C<NetUserGetInfo()> call allows the programmer to
 specify levels of 0, 1, 2, 3 (and others). Having specified this level, the
@@ -201,10 +201,10 @@ variable size structure into and out of functions.
 For any function that takes a reference to a hash as input, the programmer
 is expected to provide appropriate keys and corresponding values as well as
 the level parameter. The called function will then takes the values out of
-the supplied hash and build the approprite structure to pass to the
+the supplied hash and build the appropriate structure to pass to the
 underlying API function.
 
-For any function that takes a reference to a hash to recieve output, the
+For any function that takes a reference to a hash to receive output, the
 function will first clear any keys an corresponding values in the supplied
 hash. It will call the underlying API call and will then return in the hash
 any keys and values that are applicable at the requested level.
@@ -813,7 +813,7 @@ this can take.
 
 =head2 LocalGroupAddMember()
 
-This function is obselete in the underlying API and has therefore not
+This function is obsolete in the underlying API and has therefore not
 been implemented.  Use C<LocalGroupAddMembers> instead.
 
 =head2 LocalGroupAddMembers(server, group, array)
@@ -859,7 +859,7 @@ The C<group> to delete.
 
 =head2 LocalGroupDelMember()
 
-This function is obselete in the underlying API and has therefore not
+This function is obsolete in the underlying API and has therefore not
 been implemented.  Use C<LocalGroupDelMembers()> instead.
 
 =head2 LocalGroupDelMembers(server, group, array)
@@ -1258,9 +1258,8 @@ that the user last logged off .
 
 The times at which the user can logon. This should be an integer array
 with 21 elements.  Each element represents an 8 hour period and each bit
-represents represents an hour. Only the lower byte of each integer is
-used. If this is left undefined then no restrictions are placed on the
-account.
+represents an hour. Only the lower byte of each integer is used. If
+this is left undefined then no restrictions are placed on the account.
 
 =item C<logonServer> - Scalar String
 
@@ -1286,8 +1285,8 @@ this machine/domain.
 =item C<parms> - Scalar String
 
 The value of this key can be used by applications. There are none known
-to to author that use it, although it could be used to hold adminitrative
-information.
+to the author that use it, although it could be used to hold
+administrative information.
 
 =item C<password> - Scalar String
 
@@ -1358,7 +1357,7 @@ identifier-authority value, and I<S...> is one or more subauthority values.
 
 =item C<workstations> - Scalar String
 
-A comma-separated string containing upto 8 workstation that the named
+A comma-separated string containing up to 8 workstation that the named
 user can login to.  Setting a value for this key will then allow the
 named user to login to only those computers named.
 
@@ -1402,7 +1401,7 @@ The account is a normal user account.
 
 =item C<UF_PASSWD_CANT_CHANGE()>
 
-The password for this account cannot be changed (execpt by an Administrator
+The password for this account cannot be changed (except by an Administrator
 using one of the above calls).
 
 =item C<UF_PASSWD_NOTREQD()>
@@ -1448,7 +1447,7 @@ C<UserSetInfo()> call.
 
 =item C<USER_PRIV_ADMIN()>
 
-Account is an an administrative account.
+Account is an administrative account.
 
 =item C<USER_PRIV_GUEST()>
 
@@ -1808,7 +1807,7 @@ The C<name> field was absent or not correctly specified.
 
 =item C<LOCALGROUP_COMMENT_PARMNUM()>
 
-The C<comment> field wasabsent or not correctly specified.
+The C<comment> field was absent or not correctly specified.
 
 =back
 
