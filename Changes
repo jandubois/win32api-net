@@ -1,6 +1,11 @@
 Revision history for Perl extension Win32API::Net
 
-0.16	 Jan 07 2011
+0.17	Dec 6 2013
+	- Fix required perl version 5.6 -> 5.006.
+	- Add Github repo link to META.yml
+	- Typo fixes by David Steinbrunner
+
+0.16	Jan 07 2011
         - Don't redefine USER_INFO_4 etc because some versions of the
 	  MinGW headers do define the new structures, but don't include
 	  any of the new preprocessor constants, so there is no way to
