@@ -1359,7 +1359,8 @@ CODE:
     {
 	LPWSTR lpwServer = MBTWC(server);
 	PUSER_INFO_0 pwzUsers = NULL;
-	DWORD entriesRead = 0, totalEntries = 0, resumeHandle = 0;
+	DWORD entriesRead = 0, totalEntries = 0;
+        DWORD_PTR resumeHandle = 0;
 	DWORD index;
 	DWORD lastError = 0;
 	char tmpBuf[UNLEN+1];
