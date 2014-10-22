@@ -1,5 +1,8 @@
 Revision history for Perl extension Win32API::Net
 
+0.18    Oct 21 2014
+        - Change remaining resumeHandle to DWORD_PTR
+
 0.17	Dec 6 2013
 	- Fix required perl version 5.6 -> 5.006.
 	- Add Github repo link to META.yml
